@@ -1,0 +1,26 @@
+{
+  "name": "myedgetunnel",
+  "version": "2.0.0",
+  "description": "EdgeTunnel - Cloudflare Worker adapted for Node.js deployment",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "deploy": "bash deploy.sh"
+  },
+  "keywords": [
+    "cloudflare",
+    "worker",
+    "proxy",
+    "vless"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ws": "^8.16.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
