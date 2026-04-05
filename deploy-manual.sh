@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # EdgeTunnel 手动部署脚本（无需 sshpass）
-# 目标服务器: 69.5.7.220
+# 目标服务器: YOUR_SERVER_IP
 
 set -e
 
@@ -11,7 +11,12 @@ echo "=========================================="
 echo ""
 
 # 配置
-SERVER_IP="69.5.7.220"
+SERVER_IP="${SERVER_IP:-}"
+
+if [ -z "$SERVER_IP" ]; then
+  echo -e "${RED}错误: 请设置 SERVER_IP 环境变量，例如: SERVER_IP=1.2.3.4 ./deploy-manual.sh${NC}"
+  exit 1
+fi
 SERVER_USER="root"
 DEPLOY_DIR="/opt/myedgetunnel"
 APP_NAME="myedgetunnel"
@@ -63,7 +68,7 @@ echo ""
 echo -e "${YELLOW}请打开新终端窗口，执行以下命令连接到服务器：${NC}"
 echo ""
 echo -e "${YELLOW}ssh $SERVER_USER@$SERVER_IP${NC}"
-echo -e "${YELLOW}密码: Sx@3964117${NC}"
+echo -e "${YELLOW}请使用您配置的 SSH 密钥或密码连接${NC}"
 echo ""
 read -p "连接成功后，按 Enter 继续..."
 echo ""
@@ -206,7 +211,7 @@ echo "==========================================${NC}"
 echo ""
 echo -e "访问地址: ${GREEN}http://$SERVER_IP:8080${NC}"
 echo -e "管理后台: ${GREEN}http://$SERVER_IP:8080/admin${NC}"
-echo -e "管理密码: ${YELLOW}admin123${NC} (请登录后台修改)"
+echo -e "管理密码: ${YELLOW}请通过 ADMIN 环境变量设置${NC}"
 echo ""
 echo "常用命令 (在服务器上执行):"
 echo "  查看日志: pm2 logs myedgetunnel"

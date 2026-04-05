@@ -7,7 +7,7 @@ import { Buffer } from 'buffer';
 // 配置
 const config = {
   PORT: process.env.PORT || 8080,
-  ADMIN: process.env.ADMIN || 'admin123',
+  ADMIN: (process.env.ADMIN || '').trim(),
   KEY: process.env.KEY || '勿动此默认密钥，有需求请自行通过添加变量KEY进行修改',
   HOST: process.env.HOST || '',
   UUID: process.env.UUID || '',
@@ -242,7 +242,7 @@ const server = http.createServer(async (req, res) => {
       res.setHeader('Content-Type', 'text/plain');
     }
     if (!res.writableEnded) {
-      res.end('Internal Server Error: ' + error.message);
+      res.end('Internal Server Error');
     }
   }
 });
@@ -318,6 +318,11 @@ wss.on('connection', async (ws, req) => {
 async function startServer() {
   try {
     console.log('Starting EdgeTunnel server...');
+
+    if (!config.ADMIN) {
+      console.error('ERROR: ADMIN environment variable is not set. Please set a strong admin password before starting the server.');
+      process.exit(1);
+    }
 
     // 加载 worker
     await loadWorker();
