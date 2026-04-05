@@ -1,6 +1,6 @@
 # 云服务器部署说明
 
-本文档说明如何将 EdgeTunnel 项目部署到云服务器 (69.5.7.220)。
+本文档说明如何将 EdgeTunnel 项目部署到云服务器。
 
 ## 目录
 
@@ -15,7 +15,7 @@
 
 ### 前提条件
 
-- 云服务器: 69.5.7.220
+- 云服务器: YOUR_SERVER_IP
 - SSH 访问权限
 - Node.js 18+ (部署脚本会自动安装)
 
@@ -64,8 +64,7 @@ chmod +x deploy.sh
 **步骤 1: 连接到服务器**
 
 ```bash
-ssh root@69.5.7.220
-# 密码: Sx@3964117
+ssh root@YOUR_SERVER_IP
 ```
 
 **步骤 2: 安装 Node.js 和 PM2**
@@ -95,7 +94,7 @@ cd /opt/myedgetunnel
 tar -czf myedgetunnel.tar.gz package.json server.js _worker.js ecosystem.config.cjs .env.example nginx/
 
 # 上传到服务器
-scp myedgetunnel.tar.gz root@69.5.7.220:/opt/myedgetunnel/
+scp myedgetunnel.tar.gz root@YOUR_SERVER_IP:/opt/myedgetunnel/
 ```
 
 **步骤 5: 在服务器上解压并安装**
@@ -150,16 +149,16 @@ firewall-cmd --reload
 
 | 地址 | 说明 |
 |------|------|
-| http://69.5.7.220:8080 | 主页 |
-| http://69.5.7.220:8080/admin | 管理后台 |
-| http://69.5.7.220:8080/login | 登录页面 |
+| http://YOUR_SERVER_IP:8080 | 主页 |
+| http://YOUR_SERVER_IP:8080/admin | 管理后台 |
+| http://YOUR_SERVER_IP:8080/login | 登录页面 |
 
 ### 默认配置
 
 | 配置项 | 值 |
 |--------|------|
 | 端口 | 8080 |
-| 管理密码 | admin123 |
+| 管理密码 | 通过 ADMIN 环境变量设置 |
 | 部署目录 | /opt/myedgetunnel |
 
 **⚠️ 重要**: 首次登录后请立即修改管理员密码!
@@ -183,7 +182,7 @@ nginx -t
 systemctl restart nginx
 ```
 
-配置后可通过 http://69.5.7.220 访问 (无需端口号)。
+配置后可通过 http://YOUR_SERVER_IP 访问 (无需端口号)。
 
 ## 环境变量
 
@@ -194,7 +193,7 @@ systemctl restart nginx
 PORT=8080
 
 # 管理员密码 (必填)
-ADMIN=admin123
+ADMIN=your-strong-password
 
 # 快速订阅密钥 (可选)
 KEY=your-secret-key
@@ -213,7 +212,7 @@ GO2SOCKS5=
 | 变量名 | 说明 | 必填 | 默认值 |
 |--------|------|------|--------|
 | PORT | 服务端口 | 否 | 8080 |
-| ADMIN | 管理员密码 | 是 | admin123 |
+| ADMIN | 管理员密码 | 是 | 必须设置强密码 |
 | KEY | 快速订阅密钥 | 否 | - |
 | HOST | 强制固定伪装域名 | 否 | - |
 | UUID | 强制固定UUID | 否 | - |
@@ -298,7 +297,7 @@ free -h
 
 ```bash
 # 1. 连接到服务器
-ssh root@69.5.7.220
+ssh root@YOUR_SERVER_IP
 
 # 2. 备份当前版本 (可选)
 cd /opt

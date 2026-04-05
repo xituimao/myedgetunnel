@@ -4,10 +4,9 @@
 
 ## 服务器信息
 
-- **服务器 IP**: 69.5.7.220
-- **服务器密码**: Sx@3964117
+- **服务器 IP**: YOUR_SERVER_IP
 - **默认端口**: 8080
-- **默认管理密码**: admin123
+- **默认管理密码**: 请通过 `ADMIN` 环境变量设置强密码
 
 ## 快速部署
 
@@ -42,8 +41,7 @@
 
 1. **连接到服务器**：
    ```bash
-   ssh root@69.5.7.220
-   # 密码: Sx@3964117
+   ssh root@YOUR_SERVER_IP
    ```
 
 2. **安装 Node.js**（如果未安装）：
@@ -60,7 +58,7 @@
 4. **上传项目文件**：
    ```bash
    # 在本地执行
-   scp -r package.json server.js _worker.js ecosystem.config.cjs .env.example root@69.5.7.220:/opt/myedgetunnel/
+   scp -r package.json server.js _worker.js ecosystem.config.cjs .env.example root@YOUR_SERVER_IP:/opt/myedgetunnel/
    ```
 
 5. **在服务器上安装依赖并启动**：
@@ -98,11 +96,11 @@
 
 部署完成后，可以通过以下地址访问：
 
-- **主页**: http://69.5.7.220:8080
-- **管理后台**: http://69.5.7.220:8080/admin
-- **登录页面**: http://69.5.7.220:8080/login
+- **主页**: http://YOUR_SERVER_IP:8080
+- **管理后台**: http://YOUR_SERVER_IP:8080/admin
+- **登录页面**: http://YOUR_SERVER_IP:8080/login
 
-默认管理密码：`admin123`（请登录后台修改）
+请通过 `ADMIN` 环境变量设置强密码后方可登录
 
 ## 配置 Nginx 反向代理（可选）
 
@@ -125,7 +123,7 @@
    systemctl restart nginx
    ```
 
-配置完成后，可以通过 http://69.5.7.220 访问（不需要端口号）。
+配置完成后，可以通过 http://YOUR_SERVER_IP 访问（不需要端口号）。
 
 ## 环境变量配置
 
@@ -134,7 +132,7 @@
 | 变量名 | 说明 | 默认值 |
 |--------|------|--------|
 | PORT | 服务端口 | 8080 |
-| ADMIN | 管理员密码 | admin123 |
+| ADMIN | 管理员密码 | 必须通过环境变量设置强密码 |
 | KEY | 快速订阅密钥 | - |
 | HOST | 强制固定伪装域名 | - |
 | UUID | 强制固定UUID | - |
@@ -185,7 +183,7 @@ pm2 monit
 ./deploy.sh
 
 # 方法二：手动更新
-ssh root@69.5.7.220
+ssh root@YOUR_SERVER_IP
 cd /opt/myedgetunnel
 # 上传新文件后
 npm install --production
@@ -261,7 +259,7 @@ certbot --nginx -d your-domain.com
 如需卸载应用：
 
 ```bash
-ssh root@69.5.7.220
+ssh root@YOUR_SERVER_IP
 pm2 delete myedgetunnel
 pm2 save
 rm -rf /opt/myedgetunnel
